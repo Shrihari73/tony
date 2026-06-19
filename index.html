@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stark Motor Garage // Vehicle Database</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="splash-screen">
+    <div class="poster-container">
+      <div class="hud-corner top-left"></div>
+      <div class="hud-corner top-right"></div>
+      <div class="hud-corner bottom-left"></div>
+      <div class="hud-corner bottom-right"></div>
+      
+      <h2 class="sys-status">SYSTEM: SECURE // ONLINE</h2>
+      <h1 class="title">STARK MOTOR GARAGE</h1>
+      <p class="subtitle">VEHICLE DIAGNOSTIC & TELEMETRY DATABASE</p>
+      
+      <div class="reactor-container">
+        <button id="boot-btn" aria-label="Initialize System">
+          <div class="reactor-core"></div>
+          <div class="reactor-ring-outer"></div>
+          <div class="reactor-ring-inner"></div>
+        </button>
+      </div>
+      
+      <p class="prompt-text">CLICK CORE TO INITIALIZE APPARATUS</p>
+    </div>
+  </div>
+
+  <main id="main-content" class="hidden">
+    <header class="stark-header">
+      <div class="logo-zone">
+        <span class="brand-title">STARK MOTOR GARAGE</span>
+        <span class="version-tag">v6.2</span>
+      </div>
+      <div class="user-profile">
+        <span class="status-indicator"></span> ACCESS GRANTED // USER_CORE
+      </div>
+    </header>
+    
+    <section class="showroom-container">
+      <div class="section-header">
+        <h2>SELECT VEHICLE CLASSIFICATION</h2>
+        <div class="category-selectors">
+          <button id="show-cars" class="hud-btn active">FOUR-WHEELER CORE</button>
+          <button id="show-bikes" class="hud-btn">TWO-WHEELER CORE</button>
+        </div>
+      </div>
+
+      <div id="showroom-grid" class="grid-container"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

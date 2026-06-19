@@ -1,0 +1,349 @@
+:root {
+  --stark-glow: #00f0ff;
+  --stark-gold: #ffc800;
+  --stark-red: #ff2a2a;
+  --bg-dark: #060a0f;
+  --card-bg: rgba(10, 20, 30, 0.7);
+  --border-glow: rgba(0, 240, 255, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #ffffff;
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* --- SPLASH SCREEN POSTER --- */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #0f2338 0%, var(--bg-dark) 85%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+}
+
+.poster-container {
+  text-align: center;
+  border: 1px solid var(--border-glow);
+  padding: 50px 80px;
+  background: rgba(6, 10, 15, 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 50px rgba(0, 240, 255, 0.1), inset 0 0 30px rgba(0, 240, 255, 0.05);
+  position: relative;
+  max-width: 90%;
+}
+
+/* HUD Decorative Corners */
+.hud-corner {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--stark-glow);
+}
+.top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+.top-right { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+.bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+.bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+.sys-status {
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  color: var(--stark-gold);
+  margin-bottom: 15px;
+  text-shadow: 0 0 8px rgba(255, 200, 0, 0.4);
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: #fff;
+  text-shadow: 0 0 15px var(--stark-glow);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 3px;
+  font-size: 0.85rem;
+  margin-bottom: 50px;
+}
+
+/* --- ARC REACTOR BUTTON --- */
+.reactor-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 30px;
+}
+
+#boot-btn {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+}
+
+.reactor-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 55px;
+  height: 55px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 25px #fff, 0 0 45px var(--stark-glow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+}
+
+.reactor-ring-outer {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  border: 3px dashed var(--stark-glow);
+  border-radius: 50%;
+  animation: spinClockwise 12s linear infinite;
+  opacity: 0.7;
+}
+
+.reactor-ring-inner {
+  position: absolute;
+  top: 15px; left: 15px; width: calc(100% - 30px); height: calc(100% - 30px);
+  border: 2px dotted var(--stark-gold);
+  border-radius: 50%;
+  animation: spinCounterClockwise 6s linear infinite;
+  opacity: 0.8;
+}
+
+#boot-btn:hover .reactor-core {
+  transform: translate(-50%, -50%) scale(1.15);
+  background: var(--stark-gold);
+  box-shadow: 0 0 30px var(--stark-gold), 0 0 60px var(--stark-gold);
+}
+
+.prompt-text {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--stark-glow);
+  opacity: 0.7;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* --- TRANSITION FRAMEWORK --- */
+.hidden { display: none !important; }
+
+.shutdown-sequence {
+  transform: scale(1.1) !important;
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* --- MAIN INTERFACE DISPLAY --- */
+main {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 30px 50px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+  overflow-y: auto;
+}
+
+main.boot-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stark-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-glow);
+  padding-bottom: 20px;
+  margin-bottom: 40px;
+}
+
+.brand-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px var(--stark-glow);
+}
+
+.version-tag {
+  font-size: 0.7rem;
+  color: var(--stark-gold);
+  border: 1px solid var(--stark-gold);
+  padding: 2px 6px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.user-profile {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: #a0c0d0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: #00ff66;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ff66;
+}
+
+/* --- FILTERS & DISPLAY GRID --- */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.section-header h2 {
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.category-selectors {
+  display: flex;
+  gap: 15px;
+}
+
+.hud-btn {
+  background: rgba(0, 240, 255, 0.03);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  color: #ffffff;
+  padding: 12px 24px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.hud-btn:hover, .hud-btn.active {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--stark-glow);
+  color: var(--stark-glow);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding-bottom: 50px;
+}
+
+/* --- VEHICLE CARDS --- */
+.vehicle-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+}
+
+.vehicle-card:hover {
+  border-color: var(--stark-glow);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+  transform: translateY(-4px);
+}
+
+.image-wrapper {
+  width: 100%;
+  height: 190px;
+  background: #020406;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.vehicle-card:hover .image-wrapper img {
+  transform: scale(1.05);
+}
+
+.vehicle-info {
+  padding: 25px;
+}
+
+.vehicle-info h3 {
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+  color: #fff;
+  border-left: 3px solid var(--stark-glow);
+  padding-left: 10px;
+}
+
+.telemetry-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spec-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
+  padding-bottom: 4px;
+}
+
+.spec-label {
+  color: var(--stark-glow);
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+
+.spec-value {
+  color: #e0f5ff;
+  font-weight: 500;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes spinClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes spinCounterClockwise {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; text-shadow: 0 0 10px var(--stark-glow); }
+}
