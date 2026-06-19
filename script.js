@@ -7,13 +7,13 @@ const vehicleDatabase = {
     {
       id: "car-01",
       name: "Rolls Royce Standard Ghost",
-      image: "images/rolls royce.PNG", 
+      image: "images/rolls royce.png", 
       specs: { engine: "6.75 L Twin-Turbo V12", speed: "250 km/h", power: "563 BHP", torque: "820 Nm" }
     },
     {
       id: "car-02",
       name: "Mercedes-Benz A-Class Limousine",
-      image: "images/mercedes benz.PNG",
+      image: "images/mercedes benz.png",
       specs: { engine: " 1.3L Turbocharged Inline-4", speed: "230 km/h", power: "161 BHP", torque: " 270 Nm" }
     }
   ],
